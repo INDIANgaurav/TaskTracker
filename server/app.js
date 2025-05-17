@@ -10,7 +10,7 @@ const userRoutes = require("./routes/userRoute");
 const taskRoutes = require("./routes/taskRoute")
 const PORT = process.env.PORT || 4040;
 connectDb();
-app.use(cors({ origin: ["task-tracker-sigma-opal.vercel.app"] , credentials: true, }));
+app.use(cors({ origin: ["https://task-tracker-sigma-opal.vercel.app"] , credentials: true, }));
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", taskRoutes);
 
