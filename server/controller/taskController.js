@@ -1,9 +1,9 @@
 const Task = require("../models/tasks.js");
 const addTask = async (req, res) => {
   try {
-    const {project, title, description, priority, status } = req.body;
+    const { project, title, description, priority, status } = req.body;
     const { user } = req;
-    if (!project ||!title || !description) {
+    if (!project || !title || !description) {
       return res.status(400).json({
         error: "All fields required",
       });
@@ -24,16 +24,15 @@ const addTask = async (req, res) => {
       });
     }
 
-    const newTask = new Task({project, title, description, priority, status });
+    const newTask = new Task({ project, title, description, priority, status });
     await newTask.save();
     user.tasks.push(newTask._id);
     await user.save();
     return res.status(200).json({
       success: "Task added",
-      newTask
+      newTask,
     });
   } catch (error) {
-     
     return res.status(404).json({ error: "Internal server error" });
   }
 };
@@ -41,19 +40,19 @@ const addTask = async (req, res) => {
 const editTask = async (req, res) => {
   try {
     const { id } = req.params;
-    const {project, title, description, priority, status } = req.body;
+    const { project, title, description, priority, status } = req.body;
 
-    if (!project ||!title || !description) {
+    if (!project || !title || !description) {
       return res.status(400).json({
         error: "All fields required",
       });
     }
-    if (project.length < 6) {
+    if (project.length < 2) {
       return res.status(400).json({
         error: "project must have 6 characters",
       });
     }
-    if (title.length < 6) {
+    if (title.length < 4) {
       return res.status(400).json({
         error: "title must have 6 characters",
       });
@@ -63,7 +62,13 @@ const editTask = async (req, res) => {
         error: "description must have 6 characters",
       });
     }
-    await Task.findByIdAndUpdate(id, { project ,title, description, priority, status });
+    await Task.findByIdAndUpdate(id, {
+      project,
+      title,
+      description,
+      priority,
+      status,
+    });
     return res.status(200).json({
       success: "Task updated",
     });
@@ -72,12 +77,11 @@ const editTask = async (req, res) => {
   }
 };
 const getTask = async (req, res) => {
- 
   try {
     const { id } = req.params;
-     
+
     const taskDetails = await Task.findById(id);
-     return res.status(200).json({
+    return res.status(200).json({
       taskDetails,
     });
   } catch (error) {
@@ -87,7 +91,7 @@ const getTask = async (req, res) => {
 const deleteTask = async (req, res) => {
   try {
     const { id } = req.params;
-     await Task.findByIdAndDelete(id);
+    await Task.findByIdAndDelete(id);
     return res.status(200).json({
       success: "Task deleted",
     });

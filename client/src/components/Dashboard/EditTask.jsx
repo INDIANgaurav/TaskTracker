@@ -38,7 +38,7 @@ const EditTask = ({ setEditTask }) => {
     e.preventDefault();
     try {
       const res = await axios.put(
-        `http://localhost:4040/api/v1/editTask/${id}`,
+        `https://tasktracker-1-api.onrender.com/api/v1/editTask/${id}`,
         values,
         { withCredentials: true }
       );
@@ -55,7 +55,7 @@ const EditTask = ({ setEditTask }) => {
     e.preventDefault();
     try {
       const res = await axios.delete(
-        `http://localhost:4040/api/v1/deleteTask/${id}`,
+        `https://tasktracker-1-api.onrender.com/api/v1/deleteTask/${id}`,
         { withCredentials: true }
       );
       alert(res.data.success);
