@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 
 const jwt = require("jsonwebtoken");
 const register = async (req, res) => {
-   
   try {
     const { username, email, password, country } = req.body;
     console.log(username, email);
@@ -37,7 +36,7 @@ const register = async (req, res) => {
         country,
       });
       await newUser.save();
-       return res.status(200).json({
+      return res.status(200).json({
         success: "registered successfully",
       });
     }
@@ -66,12 +65,15 @@ const login = async (req, res) => {
               expiresIn: "10d",
             }
           );
-           res.cookie("token", token, {
+          res.cookie("token", token, {
             httpOnly: true,
-            maxAge: 10 * 24 * 60 * 60,
+            secure: true,
+            sameSite: "none",
+            maxAge: 10 * 24 * 60 * 60 * 1000,
           });
           return res.status(200).json({
             success: "Login successfully",
+            token,
           });
         } else {
           return res.status(400).json({
@@ -102,31 +104,32 @@ const logout = async (req, res) => {
 const userDetails = async (req, res) => {
   try {
     const { user } = req;
-     const getDetails = await User.findById(user._id)
+    const getDetails = await User.findById(user._id)
       .populate("tasks")
       .select("-password");
-      if(getDetails){
-          const allTasks= getDetails.tasks ;
-          let yetToStart = []
-          let inProgress = [ ]
-          let completed = [ ]
-          allTasks.map((item) => {
-            if(item.status === "yetToStart") {
-              yetToStart.push(item)
-            }else if( item.status === "inProgress") {
-              inProgress.push(item)
-            }else{
-              completed.push(item)
-            }
-          })
-          return res.status(200).json({
-            success: "success" , tasks:[{yetToStart , inProgress , completed}]
-          })
-      }
+    if (getDetails) {
+      const allTasks = getDetails.tasks;
+      let yetToStart = [];
+      let inProgress = [];
+      let completed = [];
+      allTasks.map((item) => {
+        if (item.status === "yetToStart") {
+          yetToStart.push(item);
+        } else if (item.status === "inProgress") {
+          inProgress.push(item);
+        } else {
+          completed.push(item);
+        }
+      });
+      return res.status(200).json({
+        success: "success",
+        tasks: [{ yetToStart, inProgress, completed }],
+      });
+    }
   } catch (error) {
     return res.status(500).json({
       error: "Internal server error",
     });
   }
 };
-module.exports = { register, login, logout , userDetails };
+module.exports = { register, login, logout, userDetails };
