@@ -18,20 +18,20 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:4040/api/v1/login",
+        "https://tasktracker-1-api.onrender.com/api/v1/login",
         value,
         {
           withCredentials: true,
         }
       );
       toast.success("Registered Successfully");
-      localStorage.setItem("userLoggedIn" , "yes")
-      navigate("/dashboard")
+      localStorage.setItem("userLoggedIn", "yes");
+      navigate("/dashboard");
       console.log(res.data.success);
     } catch (error) {
       toast.error("user already exists!", error.response.data);
-      navigate("/register")
-      console.log(error)
+      navigate("/register");
+      console.log(error);
     }
   };
   return (
@@ -74,7 +74,7 @@ const Login = () => {
           </button>
           <p className="text-center font-semibold text-gray-900">
             Don't have an account?{" "}
-            <Link to="/register" className="text-blue-800" >
+            <Link to="/register" className="text-blue-800">
               Signup
             </Link>{" "}
           </p>

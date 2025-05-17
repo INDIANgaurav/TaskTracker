@@ -21,7 +21,7 @@ const EditTask = ({ setEditTask }) => {
     const fetch = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:4040/api/v1/getTask/${editTaskId}`,
+          `https://tasktracker-1-api.onrender.com/api/v1/getTask/${editTaskId}`,
           {
             withCredentials: true,
           }
@@ -84,7 +84,10 @@ const EditTask = ({ setEditTask }) => {
     >
       <h1 className="text-center font-semibold text-xl mb-4">Edit Task</h1>
       <hr className="mb-6" />
-      <form onSubmit={(e) => editTask(e, values._id)} className="flex flex-col gap-5">
+      <form
+        onSubmit={(e) => editTask(e, values._id)}
+        className="flex flex-col gap-5"
+      >
         <input
           type="text"
           className="border px-3 py-2 rounded border-zinc-300 outline-none w-full"

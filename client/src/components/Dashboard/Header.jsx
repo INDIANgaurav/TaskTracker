@@ -9,7 +9,7 @@ const Header = ({ setAddTaskDiv }) => {
   const logoutHandler = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:4040/api/v1/logout",
+        "https://tasktracker-1-api.onrender.com/api/v1/logout",
         {},
         { withCredentials: true }
       );

@@ -19,7 +19,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const res = await axios.get("http://localhost:4040/api/v1/userDetails", {
+        const res = await axios.get("https://tasktracker-1-api.onrender.com/api/v1/userDetails", {
           withCredentials: true,
         });
         setTasks(res.data.tasks);

@@ -19,7 +19,7 @@ const AddTask = ({ setAddTaskDiv }) => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:4040/api/v1/addTask",
+        "https://tasktracker-1-api.onrender.com/api/v1/addTask",
         values,
         { withCredentials: true }
       );

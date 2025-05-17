@@ -2,28 +2,31 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 const Register = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [value, setValue] = useState({
     username: "",
     email: "",
     password: "",
     country: "",
   });
- const changeHandler = (e) => {
-   setValue((prevData) => ({
+  const changeHandler = (e) => {
+    setValue((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
-    }))
-};
+    }));
+  };
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:4040/api/v1/register", value);
-      if(res.data.success){
-        navigate("/login")
+      const res = await axios.post(
+        "https://tasktracker-1-api.onrender.com/api/v1/register",
+        value
+      );
+      if (res.data.success) {
+        navigate("/login");
       }
     } catch (error) {
-      console.log(error );
+      console.log(error);
     }
   };
   return (
@@ -37,7 +40,11 @@ const Register = () => {
         </h3>
       </div>
       <div className="w-[60vw]  md:w-[50vw] lg:w-[30vw] mt-4">
-        <form type="text" className="flex flex-col gap-4" onSubmit={handleOnSubmit} >
+        <form
+          type="text"
+          className="flex flex-col gap-4"
+          onSubmit={handleOnSubmit}
+        >
           <input
             type="text"
             name="username"
@@ -74,10 +81,7 @@ const Register = () => {
             className="border rounded px-4 py-1 border-zinc-400 w-[100%] outline-none"
             onChange={changeHandler}
           />
-          <button
-            
-            className="bg-blue-800 text-white font-semibold py-2 rounded hover:bg-blue-700 transition-all duration-300 "
-          >
+          <button className="bg-blue-800 text-white font-semibold py-2 rounded hover:bg-blue-700 transition-all duration-300 ">
             Signup
           </button>
           <p className="text-center font-semibold text-gray-900">
